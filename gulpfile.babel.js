@@ -122,6 +122,23 @@ function generateIjmap(ijmapPath) {
 function getSvgSpriteConfig(category) {
   return {
     shape: {
+        id: {
+            generator: function(name) {
+                console.log('Input parameter (name)', name);
+                var names = name.split('_');
+                var last = names.length -1;
+                names = names.filter(function(a, index){  
+                    if (index != 0 && index != last){  
+                    return true;
+                    }else{
+                        return false;
+                    }
+                    });
+                name = names.join("_");
+                console.log('changed (name)', name);
+                return name;
+            }
+        },
       dimension: {
         maxWidth: 24,
         maxHeight: 24
@@ -148,6 +165,12 @@ function getSvgSpriteConfig(category) {
         example: {
           dest: `./svg-sprite-${ category }-symbol.html`
         }
+      },
+      defs : {
+        bust: false,
+        dest: './',
+        sprite: `./icons/${ category }/sprite.defs.svg`,
+        example: false
       }
     }
   };
